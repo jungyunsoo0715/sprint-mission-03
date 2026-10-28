@@ -10,17 +10,21 @@ import java.util.UUID;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    // 인스턴스 필드는 자동으로 null로 초기화됩니다.
     private UUID id;
-    private Instant createdAt; // Long -> Instant
-    private Instant updatedAt; // Long -> Instant
+    private UUID profileId;
+    private Instant createdAt;
+    private Instant updatedAt;
     //
     private String username;
     private String email;
     private String password;
 
+    // 프로필 이미지가 선택 사항이라면, 생성자에서 따로 초기화하거나 매개변수로 받을 필요 없습니다.
     public User(String username, String email, String password) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
         //
         this.username = username;
         this.email = email;
@@ -54,6 +58,9 @@ public class User implements Serializable {
     */
 
     public void update(String newUsername, String newEmail, String newPassword) {
+        // 조건 플래그(Condition Flag) 또는 상태 플래그(Boolean Flag) 하고 합니다.
+        // 특정 조건의 충족 여부나 상태를 기록하기위해 사용합니다.
+        // 이를 바탕으로 후속 작업의 실행 여부를 결정합니다.
         boolean anyValueUpdated = false;
         if (newUsername != null && !newUsername.equals(this.username)) {
             this.username = newUsername;
