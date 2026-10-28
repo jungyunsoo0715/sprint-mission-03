@@ -18,6 +18,7 @@ import com.sprint.mission.discodeit.service.basic.BasicMessageService;
 import com.sprint.mission.discodeit.service.basic.BasicUserService;
 
 public class JavaApplication {
+
     static User setupUser(UserService userService) {
         User user = userService.create("woody", "woody@codeit.com", "woody1234");
         return user;
@@ -32,6 +33,7 @@ public class JavaApplication {
         Message message = messageService.create("안녕하세요.", channel.getId(), author.getId());
         System.out.println("메시지 생성: " + message.getId());
     }
+
 
     public static void main(String[] args) {
         // 레포지토리 초기화
