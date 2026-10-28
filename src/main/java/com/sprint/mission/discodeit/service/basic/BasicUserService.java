@@ -3,19 +3,25 @@ package com.sprint.mission.discodeit.service.basic;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+
 @Service
+@RequiredArgsConstructor
 public class BasicUserService implements UserService {
     private final UserRepository userRepository;
 
+    /* 생성자를 직접 작성하는 대신에, Lombok 라이브러리의 @RequiredArgsConstructor를 클래스에 붙여 기본 생성자를 생성합니다.
     public BasicUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    */
 
     @Override
     public User create(String username, String email, String password) {

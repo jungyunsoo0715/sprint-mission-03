@@ -1,9 +1,12 @@
 package com.sprint.mission.discodeit.entity;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
+@Getter
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -24,6 +27,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    /* Getter를 직접 작성하는 대신에, Lombok 라이브러리의 @Getter를 클래스에 붙여 Getter를 생성합니다.
     public UUID getId() {
         return id;
     }
@@ -47,6 +51,7 @@ public class User implements Serializable {
     public String getPassword() {
         return password;
     }
+    */
 
     public void update(String newUsername, String newEmail, String newPassword) {
         boolean anyValueUpdated = false;

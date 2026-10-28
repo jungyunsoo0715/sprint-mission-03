@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.MessageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,17 +14,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class BasicMessageService implements MessageService {
     private final MessageRepository messageRepository;
     //
     private final ChannelRepository channelRepository;
     private final UserRepository userRepository;
 
+    /* 생성자를 직접 작성하는 대신에, Lombok 라이브러리의 @RequiredArgsConstructor를 클래스에 붙여 기본 생성자를 생성합니다.
     public BasicMessageService(MessageRepository messageRepository, ChannelRepository channelRepository, UserRepository userRepository) {
         this.messageRepository = messageRepository;
         this.channelRepository = channelRepository;
         this.userRepository = userRepository;
     }
+    */
 
     @Override
     public Message create(String content, UUID channelId, UUID authorId) {
