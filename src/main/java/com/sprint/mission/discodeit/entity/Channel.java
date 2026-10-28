@@ -10,8 +10,11 @@ import java.util.UUID;
 public class Channel implements Serializable {
     private static final long serialVersionUID = 1L;
     private UUID id;
-    private Long createdAt;
-    private Long updatedAt;
+    /* Instant는 자바에서 특정 시점(날짜와 시간)을 다루는 클래스입니다.
+     *
+     */
+    private Instant createdAt; // Long -> Instant
+    private Instant updatedAt; // Long -> Instant
     //
     private ChannelType type;
     private String name;
@@ -19,8 +22,10 @@ public class Channel implements Serializable {
 
     public Channel(ChannelType type, String name, String description) {
         this.id = UUID.randomUUID();
-        this.createdAt = Instant.now().getEpochSecond();
-        //
+        /* 초 단위로 표현합니다. long을 반환합니다. 타임스탬프(long 타입)를 저장하는 데 쓰일 수 있습니다. */
+        // this.createdAt = Instant.now().getEpochSecond();
+        /* 나노초 단위로 표현합니다. Instant 객체를 반환합니다. */
+        this.createdAt = Instant.now();
         this.type = type;
         this.name = name;
         this.description = description;

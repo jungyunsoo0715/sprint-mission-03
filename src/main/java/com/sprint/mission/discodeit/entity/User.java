@@ -11,8 +11,8 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private UUID id;
-    private Long createdAt;
-    private Long updatedAt;
+    private Instant createdAt; // Long -> Instant
+    private Instant updatedAt; // Long -> Instant
     //
     private String username;
     private String email;
