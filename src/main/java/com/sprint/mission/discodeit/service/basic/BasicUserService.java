@@ -59,8 +59,20 @@ public class BasicUserService implements UserService {
         if (this.isUniqueEmail(request.email())) {
             throw new IllegalArgumentException("이미 존재하는 email 입니다.");
         }
+
+        UUID newProfileId = null;
+
         // Java의 Record는 필드에 접근할 때 필드명을 메서드 처럼 사용합니다.
-        User user = new User(request.username(), request.email(), request.password(), request.profileId());
+        if (request.profile() != null) {
+            var profile = request.profile();
+            newProfileId = binaryContentRepository.save(
+                    new BinaryContent(
+                            profile.fileName(), profile.contentType(), profile.bytes()
+                    )
+            ).getId();
+        }
+
+        User user = new User(request.username(), request.email(), request.password(), newProfileId);
 
         // UserStatus 생성, 엔티티는 빈으로 등록하지 않습니다.
         // 엔티티는 여러 사용자가 독립적으로 사용할 수 있기 때문에 싱글톤으로 관리되면 안되고,
@@ -74,9 +86,6 @@ public class BasicUserService implements UserService {
 
         UserStatus userStatus = new UserStatus(user.getId());
         this.userStatusRepository.save(userStatus);
-
-        BinaryContent binaryContent = new BinaryContent();
-        this.binaryContentRepository.save(binaryContent);
 
         return userRepository.save(user);
     }
@@ -112,6 +121,9 @@ public class BasicUserService implements UserService {
 
         UserStatus userStatus = this.findUserStatus(user.getId());
 
+        UserResponse response = this.toResponse(user);
+
+        /*
         UserResponse response = new UserResponse(
                 user.getId(),
                 user.getProfileId(),
@@ -121,15 +133,27 @@ public class BasicUserService implements UserService {
                 user.getEmail(),
                 userStatus.isOnline()
         );
+         */
 
         return response;
     }
 
-    // DTO 적용 여부와 관계 없이 수정이 불필요합니다.
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserResponse> findAll() {
+        return userRepository.findAll().stream()
+                .map(this::toResponse)
+                .toList();
     }
+
+    private UserResponse toResponse(User user) {
+        return new UserResponse(
+                user.getId(), user.getProfileId(),
+                user.getCreatedAt(), user.getUpdatedAt(),
+                user.getUsername(), user.getEmail(),
+                this.findUserStatus(user.getId()).isOnline()
+        );
+    }
+
 
     /* DTO 사용 전
     @Override
@@ -146,8 +170,38 @@ public class BasicUserService implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("ID가 " + userId + "인 사용자를 찾을 수 없습니다."));
 
-        user.update(request.newUsername(), request.newEmail(), request.newPassword(), request.newProfileId());
-        return userRepository.save(user);
+        UUID oldProfileId = user.getProfileId();
+        UUID newProfileId = null;
+
+        if (request.profile() != null) {
+            var profile = request.profile();
+            newProfileId = binaryContentRepository.save(
+                    new BinaryContent(
+                            profile.fileName(), profile.contentType(), profile.bytes()
+                    )
+            ).getId();
+        }
+
+        user.update(request.newUsername(), request.newEmail(), request.newPassword(), newProfileId);
+
+        User saved = userRepository.save(user);
+
+        if (newProfileId != null && oldProfileId != null) {
+            binaryContentRepository.deleteById(oldProfileId);
+        }
+        return saved;
+
+        /**
+         * 현재 update()는 새 파일을 등록하지 않고 전달받은 UUID만 대입합니다. 존재하지 않는 파일이나 다른 사용자의 파일도 연결할 수 있을거에요.
+         * UserUpdateRequest에도 선택적인 BinaryContentCreateRequest를 받고, 다음 순서로 처리해주세요.
+         *
+         * 수정 대상 사용자를 조회합니다.
+         * 새 프로필 요청이 있으면 파일을 저장합니다.
+         * 새 파일 ID로 사용자를 수정하고 저장합니다.
+         * 기존 프로필이 있었다면 기존 파일을 삭제합니다.
+         * 새 프로필 요청이 없으면 기존 프로필을 유지합니다.
+         */
+
     }
 
     /* 관련 도메인(Binary Content, UserStatus) 동반 삭제 구현 전
@@ -168,7 +222,8 @@ public class BasicUserService implements UserService {
             throw new NoSuchElementException("User with id " + userId + " not found");
         }
         this.userRepository.deleteById(userId);
-        this.userStatusRepository.deleteById(userId);
+        UserStatus userStatus = this.findUserStatus(userId);
+        this.userStatusRepository.deleteById(userStatus.getId());
         Optional<BinaryContent> binaryContent = this.findBinaryContent(userId);
         this.binaryContentRepository.deleteById(binaryContent.get().getId());
     }
@@ -178,8 +233,10 @@ public class BasicUserService implements UserService {
             throw new NoSuchElementException("User with id " + userId + " not found");
         }
 
-        return userStatusRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("ID가 " + userId + "인 사용자의 프로필 이미지를을 찾을 수 없습니다."));
+        UserStatus userStatus = this.findUserStatus(userId);
+
+        return userStatusRepository.findById(userStatus.getId())
+                .orElseThrow(() -> new NoSuchElementException("profileId가 " + userStatus.getId() + "인 사용자의 프로필 이미지를을 찾을 수 없습니다."));
     }
 
     public Optional<BinaryContent> findBinaryContent(UUID userId) {

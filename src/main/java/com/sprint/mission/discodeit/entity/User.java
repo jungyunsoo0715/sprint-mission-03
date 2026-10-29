@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.entity;
 
+import com.sprint.mission.discodeit.dto.BinaryContentCreateRequest;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -22,6 +23,7 @@ public class User implements Serializable {
 
     public User(String username, String email, String password, UUID profileId) {
         this.id = UUID.randomUUID();
+        this.profileId = profileId;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
         //

@@ -36,4 +36,9 @@ public class JCFBinaryContentRepository implements BinaryContentRepository {
         this.data.remove(id);
     }
 
+    @Override
+    public boolean existsById(UUID id) {
+        return this.data.containsKey(id);
+    }
+
 }

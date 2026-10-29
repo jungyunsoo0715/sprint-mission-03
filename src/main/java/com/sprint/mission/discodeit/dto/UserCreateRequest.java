@@ -14,5 +14,6 @@ public record UserCreateRequest(
         String password,
         // 프로필 이미지는 User객체 생성시 선택 사항입니다, 따라서 null 이 들어갈 수 있습니다.
         // 다만 굳이, @Nullable로 null 값이 들어갈 수 있음을 명시할 필요는 없습니다.
-        @Nullable UUID profileId
+        // @Nullable UUID profileId
+        @Nullable BinaryContentCreateRequest profile
 ) { }

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface UserStatusRepository {
     UserStatus save(UserStatus userStatus);
-
     Optional<UserStatus> findById(UUID id);
+    boolean existsById(UUID id);
     void deleteById(UUID id);
 }

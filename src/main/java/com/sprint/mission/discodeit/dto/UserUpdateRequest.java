@@ -1,5 +1,8 @@
 package com.sprint.mission.discodeit.dto;
 
+import com.sprint.mission.discodeit.entity.BinaryContent;
+import jakarta.annotation.Nullable;
+
 import java.util.UUID;
 
 public record UserUpdateRequest(
@@ -7,5 +10,6 @@ public record UserUpdateRequest(
         String newUsername,
         String newEmail,
         String newPassword,
-        UUID newProfileId
+        UUID newProfileId,
+        @Nullable BinaryContentCreateRequest profile
 ) { }

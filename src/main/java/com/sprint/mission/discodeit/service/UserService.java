@@ -14,7 +14,7 @@ public interface UserService {
     User create(UserCreateRequest request); // DTO 사용 후
     // User find(UUID userId); // DTO 사용 전
     UserResponse find(UUID userId); // DTO 사용 후
-    List<User> findAll();
+    List<UserResponse> findAll();
     // User update(UUID userId, String newUsername, String newEmail, String newPassword); // DTO 사용 전
     User update(UUID userId, UserUpdateRequest request); // DTO 사용 후
 
