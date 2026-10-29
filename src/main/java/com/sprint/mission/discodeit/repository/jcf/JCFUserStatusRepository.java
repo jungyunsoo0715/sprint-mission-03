@@ -26,6 +26,14 @@ public class JCFUserStatusRepository implements UserStatusRepository {
         return Optional.ofNullable(this.data.get(id));
     }
 
+    public Optional<UserStatus> findByUserId(UUID userId) {
+        Optional<UserStatus> userStatus = this.findAll().stream()
+                .filter(us -> us.getUserId().equals(userId))
+                .findFirst();
+
+        return userStatus;
+    }
+
     @Override
     public List<UserStatus> findAll() {
         return this.data.values().stream().toList(); // data.values()는 이미 존재하는 UserStatus 객체들을 반환하니까 Optional로 감쌀 이유가 없습니다.

@@ -55,7 +55,7 @@ public class BasicUserService implements UserService {
     public void validateUniqueUsername(String username) {
          boolean isUniqueEmail = this.userRepository.findAll().stream()
                 .anyMatch(user -> user.getUsername().equals(username));
-         if (!isUniqueEmail) {
+         if (isUniqueEmail) {
              throw new IllegalArgumentException("이미 사용 중인 사용자 이름입니다: " + username);
          }
     }
@@ -63,7 +63,7 @@ public class BasicUserService implements UserService {
     public void validateUniqueEmail(String email) {
         boolean isUniqueEmail = this.userRepository.findAll().stream()
                 .anyMatch(user -> user.getEmail().equals(email));
-        if (!isUniqueEmail) {
+        if (isUniqueEmail) {
             throw new IllegalArgumentException("이미 사용 중인 이메일입니다: " + email);
         }
     }
@@ -147,13 +147,13 @@ public class BasicUserService implements UserService {
             throw new NoSuchElementException("User with id " + userId + " not found.");
         }
 
-        List<UserStatus> userStatusList = this.userStatusRepository.findAll();
-        UserStatus userStatus = userStatusList.stream()
-                .filter(userStatus -> userStatus.getId().equals(userId))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
+        Optional<UserStatus> userStatus = this.userStatusRepository.findByUserId(userId);
 
-        return userStatus;
+        return userStatus.orElseThrow(() ->
+                new NoSuchElementException(
+                        "사용자 ID " + userId + "에 해당하는 UserStatus를 찾을 수 없습니다."
+                )
+        );
     }
 
     public Optional<BinaryContent> findBinaryContent(UUID userId) {
