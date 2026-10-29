@@ -32,7 +32,7 @@ public class UserStatus implements Serializable {
         this.updatedAt = Instant.now();
     }
 
-    public boolean isOnline(UUID userId) {
+    public boolean isOnline() {
         // duration을 계산하는 메서드는 굳이 따로 만들 필요가 없습니다.
         // 로직이 단순하고, 재사용할 일이 없습니다.
         Duration duration = Duration.between(this.updatedAt, Instant.now());

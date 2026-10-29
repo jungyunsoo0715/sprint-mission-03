@@ -20,8 +20,7 @@ public class User implements Serializable {
     private String email;
     private String password;
 
-    // 프로필 이미지가 선택 사항이라면, 생성자에서 따로 초기화하거나 매개변수로 받을 필요 없습니다.
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, UUID profileId) {
         this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
@@ -57,6 +56,7 @@ public class User implements Serializable {
     }
     */
 
+    /* 프로필 이미지 미적용 전
     public void update(String newUsername, String newEmail, String newPassword) {
         // 조건 플래그(Condition Flag) 또는 상태 플래그(Boolean Flag) 하고 합니다.
         // 특정 조건의 충족 여부나 상태를 기록하기위해 사용합니다.
@@ -72,6 +72,34 @@ public class User implements Serializable {
         }
         if (newPassword != null && !newPassword.equals(this.password)) {
             this.password = newPassword;
+            anyValueUpdated = true;
+        }
+
+        if (anyValueUpdated) {
+            this.updatedAt = Instant.now();
+        }
+    }
+     */
+
+    public void update(String newUsername, String newEmail, String newPassword, UUID newProfileId) {
+        // 조건 플래그(Condition Flag) 또는 상태 플래그(Boolean Flag) 하고 합니다.
+        // 특정 조건의 충족 여부나 상태를 기록하기위해 사용합니다.
+        // 이를 바탕으로 후속 작업의 실행 여부를 결정합니다.
+        boolean anyValueUpdated = false;
+        if (newUsername != null && !newUsername.equals(this.username)) {
+            this.username = newUsername;
+            anyValueUpdated = true;
+        }
+        if (newEmail != null && !newEmail.equals(this.email)) {
+            this.email = newEmail;
+            anyValueUpdated = true;
+        }
+        if (newPassword != null && !newPassword.equals(this.password)) {
+            this.password = newPassword;
+            anyValueUpdated = true;
+        }
+        if (newProfileId != null && !newProfileId.equals(this.profileId)) {
+            this.profileId = newProfileId;
             anyValueUpdated = true;
         }
 
