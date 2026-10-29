@@ -5,10 +5,7 @@ import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public class JCFUserStatusRepository implements UserStatusRepository {
@@ -27,6 +24,11 @@ public class JCFUserStatusRepository implements UserStatusRepository {
     @Override
     public Optional<UserStatus> findById(UUID id) {
         return Optional.ofNullable(this.data.get(id));
+    }
+
+    @Override
+    public List<UserStatus> findAll() {
+        return this.data.values().stream().toList(); // data.values()는 이미 존재하는 UserStatus 객체들을 반환하니까 Optional로 감쌀 이유가 없습니다.
     }
 
     @Override
