@@ -11,10 +11,9 @@ import java.util.UUID;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // 인스턴스 필드는 자동으로 null로 초기화됩니다.
-    private UUID id;
-    private UUID profileId;
-    private Instant createdAt;
+    private final UUID id;
+    private UUID profileId; // 프로필 이미지는 변경 될 수 있기 때문에 프로필 이미지의 id(profileId)는 불변이여서는 안됩니다.
+    private final Instant createdAt;
     private Instant updatedAt;
     //
     private String username;

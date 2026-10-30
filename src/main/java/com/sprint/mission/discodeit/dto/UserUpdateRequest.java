@@ -10,6 +10,6 @@ public record UserUpdateRequest(
         String newUsername,
         String newEmail,
         String newPassword,
-        UUID newProfileId,
+        // UUID newProfileId,
         @Nullable BinaryContentCreateRequest profile
 ) { }

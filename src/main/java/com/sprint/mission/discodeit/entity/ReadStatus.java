@@ -11,10 +11,10 @@ import java.util.UUID;
 public class ReadStatus implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private UUID id;
-    private UUID userId;
-    private UUID channelId;
-    private Instant createdAt;
+    private final UUID id;
+    private final UUID userId;
+    private final UUID channelId;
+    private final Instant createdAt;
     private Instant updatedAt;
     //
 

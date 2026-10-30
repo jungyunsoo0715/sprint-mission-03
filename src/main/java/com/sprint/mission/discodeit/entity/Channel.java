@@ -10,11 +10,13 @@ import java.util.UUID;
 
 @Getter
 public class Channel implements Serializable {
+    // final 인스턴스 필드는 객체(인스턴스) 생성시점(생성자 호출시)에 반드시 초기화되어야합니다.
+    // 그렇지 않다면 컴파일 오류가 발생합니다.
     private static final long serialVersionUID = 1L;
-    private UUID id;
-    private Instant createdAt;
+    private final UUID id;
+    private final Instant createdAt;
     private Instant updatedAt;
-    private ChannelType type;
+    private final ChannelType type;
     private String name;
     private String description;
 

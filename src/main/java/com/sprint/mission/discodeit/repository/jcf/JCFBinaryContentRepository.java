@@ -6,10 +6,7 @@ import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public class JCFBinaryContentRepository implements BinaryContentRepository {
@@ -29,6 +26,10 @@ public class JCFBinaryContentRepository implements BinaryContentRepository {
     @Override
     public Optional<BinaryContent> findById(UUID id) {
         return Optional.ofNullable(this.data.get(id));
+    }
+
+    public List<BinaryContent> findAll() {
+        return this.data.values().stream().toList();
     }
 
     @Override
