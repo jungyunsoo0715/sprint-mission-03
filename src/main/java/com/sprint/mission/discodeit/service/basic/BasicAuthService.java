@@ -6,11 +6,13 @@ import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 
-@Getter
-@AllArgsConstructor
+@Service
+@RequiredArgsConstructor
 public class BasicAuthService implements AuthService {
     private final UserRepository userRepository;
 

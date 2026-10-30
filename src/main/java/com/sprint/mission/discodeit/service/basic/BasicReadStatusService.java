@@ -69,15 +69,14 @@ public class BasicReadStatusService implements ReadStatusService {
             throw new NoSuchElementException("User with id " + userId + " not found.");
         }
 
-        List<ReadStatus> readStatus = this.readStatusRepository.findAll().stream()
-                .filter(rs -> rs.getUserId().equals(userId))
-                .toList();
+        List<ReadStatus> readStatus = this.readStatusRepository.findAllByUserId(userId);
 
         return readStatus.stream()
                 .map(this::toReadStatusResponse)
                 .toList();
     }
 
+    @Override
     public ReadStatusResponse update(UUID readStatusId, ReadStatusUpdateRequest request) {
         ReadStatus readStatus = this.readStatusRepository.findById(readStatusId)
                 .orElseThrow(() -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found."));
@@ -88,6 +87,7 @@ public class BasicReadStatusService implements ReadStatusService {
         return this.toReadStatusResponse(readStatus);
     }
 
+    @Override
     public void delete(UUID readStatusId) {
         if (!this.readStatusRepository.existsById(readStatusId)) {
             throw new NoSuchElementException("ReadStatus with id " + readStatusId + " not found.");

@@ -40,6 +40,14 @@ public class JCFReadStatusRepository implements ReadStatusRepository {
         return this.data.values().stream().toList();
     }
 
+    // 구현체
+    @Override
+    public List<ReadStatus> findAllByUserId(UUID userId) {
+        return data.values().stream()
+                .filter(status -> status.getUserId().equals(userId))
+                .toList();
+    }
+
     @Override
     public boolean existsById(UUID readStatusId) {
         return this.data.containsKey(readStatusId);
