@@ -4,15 +4,21 @@ import com.sprint.mission.discodeit.dto.LoginRequest;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.AuthService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.NoSuchElementException;
 
+@Getter
+@AllArgsConstructor
 public class BasicAuthService implements AuthService {
     private final UserRepository userRepository;
 
+    /*
     public BasicAuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+     */
 
     /* DTO 사용 전
     public User login(String username, String password) {
