@@ -8,4 +8,5 @@ import java.util.List;
 public record MessageUpdateRequest(
         @Nullable String newContent,
         @Nullable List<BinaryContent> newBinaryContents
-) { }
+) {
+}

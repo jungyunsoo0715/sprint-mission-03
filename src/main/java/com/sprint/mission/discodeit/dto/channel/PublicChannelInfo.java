@@ -9,4 +9,5 @@ public record PublicChannelInfo (
         Channel channel,
         @Override
         Instant lastMessageAt
-) implements ChannelInfo { }
+) implements ChannelInfo {
+}

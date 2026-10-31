@@ -6,4 +6,5 @@ public record ChannelUpdateRequest(
         // UUID channelId,
         String newName,
         String newDescription
-) { }
+) {
+}

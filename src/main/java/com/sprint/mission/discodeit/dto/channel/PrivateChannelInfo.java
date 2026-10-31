@@ -12,4 +12,5 @@ public record PrivateChannelInfo(
         @Override
         Instant lastMessageAt,
         Set<UUID> userIdList
-) implements ChannelInfo { }
+) implements ChannelInfo {
+}

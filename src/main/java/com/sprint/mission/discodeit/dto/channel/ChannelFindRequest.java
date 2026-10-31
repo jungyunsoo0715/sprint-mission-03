@@ -7,4 +7,5 @@ import java.util.UUID;
 public record ChannelFindRequest(
         UUID channelId,
         @Nullable UUID userId
-) { }
+) {
+}

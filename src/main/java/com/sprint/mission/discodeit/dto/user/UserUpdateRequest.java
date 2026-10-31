@@ -1,9 +1,7 @@
-package com.sprint.mission.discodeit.dto;
+package com.sprint.mission.discodeit.dto.user;
 
-import com.sprint.mission.discodeit.entity.BinaryContent;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
 import jakarta.annotation.Nullable;
-
-import java.util.UUID;
 
 public record UserUpdateRequest(
         // UUID userId, // userId는 포함하지 않는다, update()의 인자로 따로 간다.
@@ -12,4 +10,5 @@ public record UserUpdateRequest(
         String newPassword,
         // UUID newProfileId,
         @Nullable BinaryContentCreateRequest profile
-) { }
+) {
+}

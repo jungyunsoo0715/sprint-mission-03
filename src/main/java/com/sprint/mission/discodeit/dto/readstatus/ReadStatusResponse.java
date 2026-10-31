@@ -9,4 +9,5 @@ public record ReadStatusResponse(
         UUID channelId,
         Instant createdAt,
         Instant updatedAt
-) { }
+) {
+}
