@@ -10,7 +10,6 @@ public interface ReadStatusRepository {
     ReadStatus save(ReadStatus readStatus);
     List<ReadStatus> saveAll(List<ReadStatus> readStatusList);
     Optional<ReadStatus> findById(UUID readStatusId);
-    Optional<ReadStatus> findByUserId(UUID userId);
     List<ReadStatus> findAll();
     List<ReadStatus> findAllByUserId(UUID userId);
     boolean existsById(UUID readStatusId);
