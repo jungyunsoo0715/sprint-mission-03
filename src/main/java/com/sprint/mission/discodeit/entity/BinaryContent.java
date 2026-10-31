@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Getter
-public class BinaryContent implements Serializable {
+public final class BinaryContent implements Serializable { // BinarayContetn는 불변 객체를 생성함으로 클래스 앞에 final을 붙입니다.
 
     private final UUID id;
     private final Instant createdAt;
