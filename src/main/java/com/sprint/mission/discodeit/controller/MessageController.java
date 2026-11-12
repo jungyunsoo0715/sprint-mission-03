@@ -56,10 +56,10 @@ public class MessageController {
     public ResponseEntity<MessageListResponse> findAllMessage(
             @PathVariable("channel-id") UUID channelId
     ) {
-        List<MessageResponse> messageResponseList =
+        MessageListResponse messageResponseList =
                 this.messageService.findAllByChannelId(channelId);
 
-        return ResponseEntity.ok(new MessageListResponse(messageResponseList));
+        return ResponseEntity.ok(messageResponseList);
     }
 
     @DeleteMapping("/{message-id}")

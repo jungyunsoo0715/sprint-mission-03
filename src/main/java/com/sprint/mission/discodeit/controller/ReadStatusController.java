@@ -44,10 +44,10 @@ public class ReadStatusController {
     public ResponseEntity<ReadStatusListResponse> findReadStatusesByUserId(
             @PathVariable("user-id") UUID userId
     ) {
-        List<ReadStatusResponse> readStatusListResponse =
+        ReadStatusListResponse readStatusListResponse =
                 this.readStatusService.findAllByUserId(userId);
 
-        return ResponseEntity.ok(new ReadStatusListResponse(readStatusListResponse));
+        return ResponseEntity.ok(readStatusListResponse);
     }
 }
 

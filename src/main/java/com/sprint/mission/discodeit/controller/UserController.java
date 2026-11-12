@@ -66,8 +66,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<UserListResponse> getAllUsers() {
-        List<UserResponse> userList = this.userService.findAll();
-        UserListResponse userListResponse = new UserListResponse(userList);
+        UserListResponse userListResponse = this.userService.findAll();
 
         return ResponseEntity.ok(userListResponse);
     }

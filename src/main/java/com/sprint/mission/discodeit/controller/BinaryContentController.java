@@ -44,11 +44,11 @@ public class BinaryContentController {
     public ResponseEntity<BinaryContentListResponse> findBinaryContentsByIds(
             @RequestParam("binaryContentIds") List<UUID> binaryContentIds
     ) {
-        List<BinaryContentResponse> binaryContentListResponse
+        BinaryContentListResponse binaryContentListResponse
                 = this.binaryContentService.findAllByIdIn(binaryContentIds);
 
         return ResponseEntity.ok(
-                new BinaryContentListResponse(binaryContentListResponse)
+                binaryContentListResponse
         );
     }
 
