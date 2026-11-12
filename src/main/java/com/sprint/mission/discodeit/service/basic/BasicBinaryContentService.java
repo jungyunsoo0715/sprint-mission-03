@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentListResponse;
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentResponse;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.exception.binarycontent.BinaryContentNotFoundException;
@@ -47,7 +48,7 @@ public class BasicBinaryContentService implements BinaryContentService {
     }
 
     @Override
-    public List<BinaryContentResponse> findAllByIdIn(List<UUID> binaryContentIds) {
+    public BinaryContentListResponse findAllByIdIn(List<UUID> binaryContentIds) {
         List<BinaryContentResponse> binaryContentResponses = new ArrayList<>();
 
         for (UUID binaryContentId : binaryContentIds) {
@@ -62,7 +63,7 @@ public class BasicBinaryContentService implements BinaryContentService {
             binaryContentResponses.add(binaryContentResponse);
         }
 
-        return binaryContentResponses;
+        return new BinaryContentListResponse(binaryContentResponses);
     }
 
     @Override

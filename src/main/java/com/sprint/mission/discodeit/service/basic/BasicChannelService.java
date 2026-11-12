@@ -52,10 +52,10 @@ public class BasicChannelService implements ChannelService {
             this.channelRepository.save(channel);
             this.readStatusRepository.saveAll(readStatusList);
 
-            Set<UUID> userSet = this.findParticipantIds(channel.getId());
+            Set<UUID> userIdSet = this.findParticipantIds(channel.getId());
 
 
-            return this.channelMapper.toChannelResponse(channel, null, userSet);
+            return this.channelMapper.toChannelResponse(channel, null, userIdSet);
 
         } else if (this.isPublicChannel(request)) {
             Channel channel = new Channel(request);
@@ -97,13 +97,13 @@ public class BasicChannelService implements ChannelService {
     public ChannelResponse find(ChannelFindRequest request) {
         Channel channel = this.findChannelEntity(request.channelId());
         Instant lastMessageAt = this.findLastMessageAt(request.channelId());
-        Set<UUID> userSet = null;
+        Set<UUID> userIdSet = null;
 
         if (channel.getType() == ChannelType.PRIVATE) {
-            userSet = this.findParticipantIds(request.channelId());
+            userIdSet = this.findParticipantIds(request.channelId());
         }
 
-        return this.channelMapper.toChannelResponse(channel, lastMessageAt, userSet);
+        return this.channelMapper.toChannelResponse(channel, lastMessageAt, userIdSet);
     }
 
     private Set<UUID> findParticipantIds(UUID channelId) {
@@ -122,7 +122,7 @@ public class BasicChannelService implements ChannelService {
     }
 
     @Override
-    public List<ChannelResponse> findAllByUserId(UUID userId) {
+    public ChannelListResponse findAllByUserId(UUID userId) {
         if (!this.userRepository.existsById(userId)) {
             throw new UserNotFoundException(
                     "ID가 " + userId + "인 사용자를 찾을 수 없습니다."
@@ -134,7 +134,6 @@ public class BasicChannelService implements ChannelService {
                 this.readStatusRepository.findAllByUserId(userId);
 
         // 2. ReadStatus 의 ChannelId를 가져옵니다.
-
         Set<UUID> channelIdsByUserId = readStatusesByUserId.stream()
                 .map(ReadStatus::getChannelId)
                 .collect(Collectors.toSet());
@@ -146,9 +145,9 @@ public class BasicChannelService implements ChannelService {
                         .map(c -> {
                             Channel channel = c;
                             Instant lastMessageAt = this.findLastMessageAt(c.getId());
-                            Set<UUID> userSet = this.findParticipantIds(c.getId());
+                            Set<UUID> userIdSet = this.findParticipantIds(c.getId());
 
-                            return this.channelMapper.toChannelResponse(channel, lastMessageAt, userSet);
+                            return this.channelMapper.toChannelResponse(channel, lastMessageAt, userIdSet);
                         })
                         .distinct()
                         .collect(Collectors.toCollection(ArrayList::new));
@@ -167,7 +166,7 @@ public class BasicChannelService implements ChannelService {
 
         privateChannelResponsesByUserId.addAll(publicChannelResponses);
 
-        return privateChannelResponsesByUserId;
+        return new ChannelListResponse(privateChannelResponsesByUserId);
     }
 
     @Override

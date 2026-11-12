@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusCreateRequest;
+import com.sprint.mission.discodeit.dto.readstatus.ReadStatusListResponse;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusResponse;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateRequest;
 import com.sprint.mission.discodeit.entity.ReadStatus;
@@ -74,7 +75,7 @@ public class BasicReadStatusService implements ReadStatusService {
 
 
     @Override
-    public List<ReadStatusResponse> findAllByUserId(UUID userId) {
+    public ReadStatusListResponse findAllByUserId(UUID userId) {
         if (!this.userRepository.existsById(userId)) {
             throw new UserNotFoundException(
                     "ID가 " + userId + "인 사용자를 찾을 수 없습니다."
@@ -83,9 +84,11 @@ public class BasicReadStatusService implements ReadStatusService {
 
         List<ReadStatus> readStatus = this.readStatusRepository.findAllByUserId(userId);
 
-        return readStatus.stream()
+        List<ReadStatusResponse> readStatusResponses = readStatus.stream()
                 .map(this.readStatusMapper::toReadStatusResponse)
                 .toList();
+
+        return new ReadStatusListResponse(readStatusResponses);
     }
 
     @Override

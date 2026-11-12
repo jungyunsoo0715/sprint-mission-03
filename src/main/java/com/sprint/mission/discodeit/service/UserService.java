@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service;
 
 import com.sprint.mission.discodeit.dto.user.UserCreateRequest;
+import com.sprint.mission.discodeit.dto.user.UserListResponse;
 import com.sprint.mission.discodeit.dto.user.UserResponse;
 import com.sprint.mission.discodeit.dto.user.UserUpdateRequest;
 import com.sprint.mission.discodeit.entity.User;
@@ -17,7 +18,7 @@ public interface UserService {
 
     UserResponse find(UUID userId);
 
-    List<UserResponse> findAll();
+    UserListResponse findAll();
 
     User findUserEntity(UUID userId);
 

@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.user.UserCreateRequest;
+import com.sprint.mission.discodeit.dto.user.UserListResponse;
 import com.sprint.mission.discodeit.dto.user.UserResponse;
 import com.sprint.mission.discodeit.dto.user.UserUpdateRequest;
 import com.sprint.mission.discodeit.entity.*;
@@ -110,7 +111,7 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    public List<UserResponse> findAll() {
+    public UserListResponse findAll() {
         List<User> users = userRepository.findAll();
         List<UserResponse> userResponses = new ArrayList<>();
         for (User user : users) {
@@ -123,7 +124,7 @@ public class BasicUserService implements UserService {
             userResponses.add(this.userMapper.toUserResponse(user, userStatus));
         }
 
-        return userResponses;
+        return new UserListResponse(userResponses);
     }
 
     @Override

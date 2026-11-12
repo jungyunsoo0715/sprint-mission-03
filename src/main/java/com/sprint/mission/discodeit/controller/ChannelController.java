@@ -49,12 +49,10 @@ public class ChannelController {
     public ResponseEntity<ChannelListResponse> getVisibleChannels(
             @PathVariable("user-id") UUID userId
     ) {
-        List<ChannelResponse> channelResponseList =
+        ChannelListResponse channelListResponse =
                 this.channelService.findAllByUserId(userId);
-        ChannelListResponse channelListResponseDto =
-                new ChannelListResponse(channelResponseList);
 
-        return ResponseEntity.ok(channelListResponseDto);
+
+        return ResponseEntity.ok(channelListResponse);
     }
-
 }
