@@ -4,7 +4,7 @@ import com.sprint.mission.discodeit.entity.Channel;
 
 import java.time.Instant;
 
-public interface ChannelInfo {
+public interface ChannelResponse {
     Channel channel();
     Instant lastMessageAt();
 }

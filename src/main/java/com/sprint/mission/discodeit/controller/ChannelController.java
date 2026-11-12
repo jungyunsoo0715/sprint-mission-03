@@ -1,8 +1,6 @@
 package com.sprint.mission.discodeit.controller;
 
 import com.sprint.mission.discodeit.dto.channel.*;
-import com.sprint.mission.discodeit.dto.readstatus.ReadStatusResponse;
-import com.sprint.mission.discodeit.mapper.ChannelMapper;
 import com.sprint.mission.discodeit.service.ChannelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,26 +18,26 @@ public class ChannelController {
     private final ChannelService channelService;
 
     @PostMapping
-    public ResponseEntity<ChannelInfo> createChannel(
+    public ResponseEntity<ChannelResponse> createChannel(
             @RequestBody ChannelCreateRequest request
     ) {
-        ChannelInfo channelInfo = this.channelService.createChannel(request);
+        ChannelResponse channelResponse = this.channelService.createChannel(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(channelInfo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(channelResponse);
     }
 
     @PatchMapping("/{channel-id}")
-    public ResponseEntity<ChannelInfo> updatePublicChannel(
+    public ResponseEntity<ChannelResponse> updatePublicChannel(
             @PathVariable("channel-id") UUID channelId,
             @RequestBody ChannelUpdateRequest request
     ) {
-        ChannelInfo channelInfo = this.channelService.update(channelId, request);
+        ChannelResponse channelResponse = this.channelService.update(channelId, request);
 
-        return ResponseEntity.ok(channelInfo);
+        return ResponseEntity.ok(channelResponse);
     }
 
     @DeleteMapping("/{channel-id}")
-    public ResponseEntity<ChannelInfo> deleteChannel(
+    public ResponseEntity<ChannelResponse> deleteChannel(
             @PathVariable("channel-id") UUID channelId
     ) {
         this.channelService.delete(channelId);
@@ -48,15 +46,15 @@ public class ChannelController {
     }
 
     @GetMapping("/{user-id}")
-    public ResponseEntity<ChannelInfoList> getVisibleChannels(
+    public ResponseEntity<ChannelListResponse> getVisibleChannels(
             @PathVariable("user-id") UUID userId
     ) {
-        List<ChannelInfo> channelInfoList =
+        List<ChannelResponse> channelResponseList =
                 this.channelService.findAllByUserId(userId);
-        ChannelInfoList channelInfoListDto =
-                new ChannelInfoList(channelInfoList);
+        ChannelListResponse channelListResponseDto =
+                new ChannelListResponse(channelResponseList);
 
-        return ResponseEntity.ok(channelInfoListDto);
+        return ResponseEntity.ok(channelListResponseDto);
     }
 
 }

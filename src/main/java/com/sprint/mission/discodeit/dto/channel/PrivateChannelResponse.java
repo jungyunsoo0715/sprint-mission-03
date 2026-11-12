@@ -6,11 +6,11 @@ import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
-public record PrivateChannelInfo(
+public record PrivateChannelResponse(
         @Override
         Channel channel,
         @Override
         Instant lastMessageAt,
         Set<UUID> userIdList
-) implements ChannelInfo {
+) implements ChannelResponse {
 }

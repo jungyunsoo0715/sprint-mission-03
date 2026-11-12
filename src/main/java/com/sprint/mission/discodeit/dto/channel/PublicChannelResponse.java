@@ -4,10 +4,10 @@ import com.sprint.mission.discodeit.entity.Channel;
 
 import java.time.Instant;
 
-public record PublicChannelInfo (
+public record PublicChannelResponse(
         @Override
         Channel channel,
         @Override
         Instant lastMessageAt
-) implements ChannelInfo {
+) implements ChannelResponse {
 }
