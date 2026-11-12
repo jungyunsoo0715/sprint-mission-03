@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 @RequiredArgsConstructor
 public class AuthController {
+
     private final AuthService authService;
+
     private final AuthMapper authMapper;
 
     @PostMapping
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(
+            @Valid @RequestBody LoginRequest request
+    ) {
         User user = this.authService.login(request);
         LoginResponse loginResponse = this.authMapper.toLoginResponse(user);
 

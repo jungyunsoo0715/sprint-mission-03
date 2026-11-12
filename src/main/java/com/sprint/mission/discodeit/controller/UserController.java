@@ -40,19 +40,25 @@ public class UserController {
                 .body(userResponse);
     }
 
-    @PatchMapping(value = "/{user-id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(value = "/{user-id}",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable("user-id") UUID userId,
             @Valid @RequestPart("request") UserUpdateRequest request,
             @RequestPart(value = "profile", required = false)
             MultipartFile profile) throws IOException {
-        UserResponse userResponse = this.userService.update(userId, request, profile);
+        UserResponse userResponse = this.userService.update(
+                userId, request, profile
+        );
 
         return ResponseEntity.ok(userResponse);
     }
 
     @DeleteMapping("/{user-id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("user-id") UUID userId) {
+    public ResponseEntity<Void> deleteUser(
+            @PathVariable("user-id") UUID userId
+    ) {
         this.userService.delete(userId);
 
         return ResponseEntity.noContent().build();
@@ -69,8 +75,10 @@ public class UserController {
     @PatchMapping("/{user-id}/status")
     public ResponseEntity<UserStatusResponse> updateUserOnlineStatus(
             @PathVariable("user-id") UUID userId,
-            @Valid @RequestBody UserStatusUpdateRequest request) {
-        UserStatusResponse userStatusResponse = this.userStatusService.updateByUserId(userId);
+            @Valid @RequestBody UserStatusUpdateRequest request
+    ) {
+        UserStatusResponse userStatusResponse =
+                this.userStatusService.updateByUserId(userId);
 
         return ResponseEntity.ok(userStatusResponse);
     }

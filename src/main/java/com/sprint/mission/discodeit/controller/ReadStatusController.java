@@ -21,22 +21,31 @@ public class ReadStatusController {
     private final ReadStatusService readStatusService;
 
     @PostMapping
-    public ResponseEntity<ReadStatusResponse> createReadStatus(@Valid @RequestBody ReadStatusCreateRequest request) {
-        ReadStatusResponse readStatusResponse = this.readStatusService.create(request);
+    public ResponseEntity<ReadStatusResponse> createReadStatus(
+            @Valid @RequestBody ReadStatusCreateRequest request
+    ) {
+        ReadStatusResponse readStatusResponse =
+                this.readStatusService.create(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(readStatusResponse);
     }
 
     @PatchMapping
-    public ResponseEntity<ReadStatusResponse> updateReadStatus(@Valid @RequestBody ReadStatusUpdateRequest request) {
-        ReadStatusResponse readStatusResponse = this.readStatusService.update(request);
+    public ResponseEntity<ReadStatusResponse> updateReadStatus(
+            @Valid @RequestBody ReadStatusUpdateRequest request
+    ) {
+        ReadStatusResponse readStatusResponse =
+                this.readStatusService.update(request);
 
         return ResponseEntity.ok(readStatusResponse);
     }
 
     @GetMapping("/{user-id}")
-    public ResponseEntity<ReadStatusListResponse> findReadStatusesByUserId(@PathVariable("user-id") UUID userId) {
-        List<ReadStatusResponse> readStatusListResponse = this.readStatusService.findAllByUserId(userId);
+    public ResponseEntity<ReadStatusListResponse> findReadStatusesByUserId(
+            @PathVariable("user-id") UUID userId
+    ) {
+        List<ReadStatusResponse> readStatusListResponse =
+                this.readStatusService.findAllByUserId(userId);
 
         return ResponseEntity.ok(new ReadStatusListResponse(readStatusListResponse));
     }

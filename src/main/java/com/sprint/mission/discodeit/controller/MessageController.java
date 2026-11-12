@@ -24,7 +24,8 @@ public class MessageController {
             @RequestPart(value = "attachments", required = false)
             List<MultipartFile> attachments
     ) {
-        MessageResponse messageResponse = this.messageService.create(request, attachments);
+        MessageResponse messageResponse =
+                this.messageService.create(request, attachments);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(messageResponse);
     }
@@ -36,27 +37,35 @@ public class MessageController {
             @RequestPart(value = "attachments", required = false)
             List<MultipartFile> attachments
     ) {
-        MessageResponse messageResponse = this.messageService.update(messageId, request, attachments);
+        MessageResponse messageResponse = this.messageService.update(
+                messageId, request, attachments);
 
         return ResponseEntity.ok(messageResponse);
     }
 
     @GetMapping("/{message-id}")
-    public ResponseEntity<MessageResponse> findMessage(@PathVariable("message-id") UUID messageId) {
+    public ResponseEntity<MessageResponse> findMessage(
+            @PathVariable("message-id") UUID messageId
+    ) {
         MessageResponse messageResponse = this.messageService.find(messageId);
 
         return ResponseEntity.ok(messageResponse);
     }
 
     @GetMapping("/{channel-id}/channel")
-    public ResponseEntity<MessageListResponse> findAllMessage(@PathVariable("channel-id") UUID channelId) {
-        List<MessageResponse> messageResponseList = this.messageService.findAllByChannelId(channelId);
+    public ResponseEntity<MessageListResponse> findAllMessage(
+            @PathVariable("channel-id") UUID channelId
+    ) {
+        List<MessageResponse> messageResponseList =
+                this.messageService.findAllByChannelId(channelId);
 
         return ResponseEntity.ok(new MessageListResponse(messageResponseList));
     }
 
     @DeleteMapping("/{message-id}")
-    public ResponseEntity<Void> deleteMessage(@PathVariable("message-id") UUID messageId) {
+    public ResponseEntity<Void> deleteMessage(
+            @PathVariable("message-id") UUID messageId
+    ) {
         this.messageService.delete(messageId);
 
         return ResponseEntity.noContent().build();
