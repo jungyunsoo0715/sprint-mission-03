@@ -20,14 +20,11 @@ public class AuthController {
 
     private final AuthService authService;
 
-    private final AuthMapper authMapper;
-
     @PostMapping
     public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginRequest request
     ) {
-        User user = this.authService.login(request);
-        LoginResponse loginResponse = this.authMapper.toLoginResponse(user);
+        LoginResponse loginResponse = this.authService.login(request);
 
         return ResponseEntity.ok(loginResponse);
     }
