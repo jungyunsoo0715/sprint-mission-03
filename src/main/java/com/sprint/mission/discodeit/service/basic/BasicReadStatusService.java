@@ -8,6 +8,7 @@ import com.sprint.mission.discodeit.exception.DuplicateResourceException;
 import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
 import com.sprint.mission.discodeit.exception.readstatus.ReadStatusNotFoundException;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
+import com.sprint.mission.discodeit.mapper.ReadStatusMapper;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
@@ -21,9 +22,13 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class BasicReadStatusService implements ReadStatusService {
+
     private final ReadStatusRepository readStatusRepository;
+
     private final UserRepository userRepository;
     private final ChannelRepository channelRepository;
+
+    private final ReadStatusMapper readStatusMapper;
 
     @Override
     public ReadStatusResponse create(ReadStatusCreateRequest request) {
@@ -50,14 +55,14 @@ public class BasicReadStatusService implements ReadStatusService {
         ReadStatus readStatus = new ReadStatus(request.userId(), request.channelId());
         readStatusRepository.save(readStatus);
 
-        return this.toReadStatusResponse(readStatus);
+        return this.readStatusMapper.toReadStatusResponse(readStatus);
     }
 
     @Override
     public ReadStatusResponse find(UUID readStatusId) {
         ReadStatus readStatus = this.findReadStatusEntity(readStatusId);
 
-        return this.toReadStatusResponse(readStatus);
+        return this.readStatusMapper.toReadStatusResponse(readStatus);
     }
 
     private ReadStatus findReadStatusEntity(UUID readStatusId) {
@@ -67,15 +72,6 @@ public class BasicReadStatusService implements ReadStatusService {
                 ));
     }
 
-    private ReadStatusResponse toReadStatusResponse(ReadStatus readStatus) {
-        return new ReadStatusResponse(
-                readStatus.getId(),
-                readStatus.getUserId(),
-                readStatus.getChannelId(),
-                readStatus.getCreatedAt(),
-                readStatus.getUpdatedAt()
-        );
-    }
 
     @Override
     public List<ReadStatusResponse> findAllByUserId(UUID userId) {
@@ -88,7 +84,7 @@ public class BasicReadStatusService implements ReadStatusService {
         List<ReadStatus> readStatus = this.readStatusRepository.findAllByUserId(userId);
 
         return readStatus.stream()
-                .map(this::toReadStatusResponse)
+                .map(this.readStatusMapper::toReadStatusResponse)
                 .toList();
     }
 
@@ -99,7 +95,7 @@ public class BasicReadStatusService implements ReadStatusService {
         readStatus.update();
         this.readStatusRepository.save(readStatus);
 
-        return this.toReadStatusResponse(readStatus);
+        return this.readStatusMapper.toReadStatusResponse(readStatus);
     }
 
     @Override
