@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentResponse;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.exception.binarycontent.BinaryContentNotFoundException;
+import com.sprint.mission.discodeit.mapper.BinaryContentMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,10 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class BasicBinaryContentService implements BinaryContentService {
+
     private final BinaryContentRepository binaryContentRepository;
+
+    private final BinaryContentMapper binaryContentMapper;
 
     @Override
     public BinaryContentResponse create(BinaryContentCreateRequest request) {
@@ -27,18 +31,9 @@ public class BasicBinaryContentService implements BinaryContentService {
                 request.bytes());
         this.binaryContentRepository.save(binaryContent);
 
-        return this.toBinaryContentResponse(binaryContent);
+        return this.binaryContentMapper.toBinaryContentResponse(binaryContent);
     }
 
-    private BinaryContentResponse toBinaryContentResponse(
-            @NonNull BinaryContent binaryContent) {
-        return new BinaryContentResponse(
-                binaryContent.getId(),
-                binaryContent.getFileName(),
-                binaryContent.getContentType(),
-                binaryContent.getBytes()
-        );
-    }
 
     @Override
     public BinaryContentResponse find(UUID binaryContentId) {
@@ -48,7 +43,7 @@ public class BasicBinaryContentService implements BinaryContentService {
                         "ID가 " + binaryContentId + "인 파일을 찾을 수 없습니다."
                 ));
 
-        return this.toBinaryContentResponse(binaryContent);
+        return this.binaryContentMapper.toBinaryContentResponse(binaryContent);
     }
 
     @Override
@@ -62,7 +57,7 @@ public class BasicBinaryContentService implements BinaryContentService {
                             "ID가 " + binaryContentId + "인 파일을 찾을 수 없습니다."
                     ));
             BinaryContentResponse binaryContentResponse =
-                    this.toBinaryContentResponse(binaryContent);
+                    this.binaryContentMapper.toBinaryContentResponse(binaryContent);
 
             binaryContentResponses.add(binaryContentResponse);
         }
