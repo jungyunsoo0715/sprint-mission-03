@@ -92,10 +92,11 @@ public class BasicReadStatusService implements ReadStatusService {
     }
 
     @Override
-    public ReadStatusResponse update(ReadStatusUpdateRequest request) {
-        ReadStatus readStatus = this.findReadStatusEntity(request.readStatusId());
+    public ReadStatusResponse update(UUID readStatusID, ReadStatusUpdateRequest request) {
+        ReadStatus readStatus = this.findReadStatusEntity(readStatusID);
 
         readStatus.update();
+        readStatus.updateLastReadAt(request.newLastReadAt());
         this.readStatusRepository.save(readStatus);
 
         return this.readStatusMapper.toReadStatusResponse(readStatus);

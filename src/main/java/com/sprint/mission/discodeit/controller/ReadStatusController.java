@@ -30,8 +30,9 @@ public class ReadStatusController {
         return ResponseEntity.status(HttpStatus.CREATED).body(readStatusResponse);
     }
 
-    @PatchMapping("/{read-status-id}")
+    @PatchMapping("/{readStatusId}")
     public ResponseEntity<ReadStatusResponse> updateReadStatus(
+            @PathVariable("readStatusId") UUID readStatusId,
             @Valid @RequestBody ReadStatusUpdateRequest request
     ) {
         ReadStatusResponse readStatusResponse =
@@ -40,9 +41,9 @@ public class ReadStatusController {
         return ResponseEntity.ok(readStatusResponse);
     }
 
-    @GetMapping("/{user-id}")
+    @GetMapping("/{userId}")
     public ResponseEntity<ReadStatusListResponse> findReadStatusesByUserId(
-            @PathVariable("user-id") UUID userId
+            @PathVariable("userId") UUID userId
     ) {
         ReadStatusListResponse readStatusListResponse =
                 this.readStatusService.findAllByUserId(userId);

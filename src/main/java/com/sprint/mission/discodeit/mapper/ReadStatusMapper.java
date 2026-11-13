@@ -9,10 +9,11 @@ public class ReadStatusMapper {
     public ReadStatusResponse toReadStatusResponse(ReadStatus readStatus) {
         return new ReadStatusResponse(
                 readStatus.getId(),
+                readStatus.getCreatedAt(),
+                readStatus.getUpdatedAt(),
                 readStatus.getUserId(),
                 readStatus.getChannelId(),
-                readStatus.getCreatedAt(),
-                readStatus.getUpdatedAt()
+                readStatus.getLastReadAt()
         );
     }
 }
