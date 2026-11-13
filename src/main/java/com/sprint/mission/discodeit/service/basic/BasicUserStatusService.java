@@ -171,6 +171,7 @@ public class BasicUserStatusService implements UserStatusService {
                                 ));
 
         userStatus.update();
+        userStatus.makeOnline();
         this.userStatusRepository.save(userStatus);
         // 이 클래스 내부에 정의된 매퍼를 더이상 사용하지 않고, 외부의 매퍼 클래스의 매퍼를 사용합니다.
         return this.userStatusMapper.toUserStatusResponse(userStatus);

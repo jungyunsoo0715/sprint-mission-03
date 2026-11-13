@@ -30,15 +30,28 @@ public class MessageController {
         return ResponseEntity.status(HttpStatus.CREATED).body(messageResponse);
     }
 
+    /*
     @PatchMapping("/{messageId}")
     public ResponseEntity<MessageResponse> updateMessage(
             @PathVariable("messageId") UUID messageId,
-            @RequestPart("request")MessageUpdateRequest request,
+            @RequestPart("request") MessageUpdateRequest request,
             @RequestPart(value = "attachments", required = false)
             List<MultipartFile> attachments
     ) {
         MessageResponse messageResponse = this.messageService.update(
                 messageId, request, attachments);
+
+        return ResponseEntity.ok(messageResponse);
+    }
+     */
+
+    @PatchMapping("/{messageId}")
+    public ResponseEntity<MessageResponse> updateMessage(
+            @PathVariable("messageId") UUID messageId,
+            @RequestBody MessageUpdateRequest request
+    ) {
+        MessageResponse messageResponse = this.messageService.update(
+                messageId, request, null);
 
         return ResponseEntity.ok(messageResponse);
     }
