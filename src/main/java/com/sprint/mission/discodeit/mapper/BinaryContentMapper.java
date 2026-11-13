@@ -11,7 +11,9 @@ public class BinaryContentMapper {
             @NonNull BinaryContent binaryContent) {
         return new BinaryContentResponse(
                 binaryContent.getId(),
+                binaryContent.getCreatedAt(),
                 binaryContent.getFileName(),
+                binaryContent.getSize(),
                 binaryContent.getContentType(),
                 binaryContent.getBytes()
         );
