@@ -78,6 +78,7 @@ public class BasicMessageService implements MessageService {
                     try {
                         return new BinaryContent(
                                 a.getOriginalFilename(),
+                                a.getSize(),
                                 a.getContentType(),
                                 a.getBytes()
                         );

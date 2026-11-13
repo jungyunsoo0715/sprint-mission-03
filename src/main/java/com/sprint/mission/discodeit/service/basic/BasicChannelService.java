@@ -226,8 +226,6 @@ public class BasicChannelService implements ChannelService {
 
         channel.update(request.newName(), request.newDescription());
 
-        Instant lastMessageAt = this.findLastMessageAt(channelId);
-
         this.channelRepository.save(channel);
 
         return this.channelMapper.toChannelResponse(channel);

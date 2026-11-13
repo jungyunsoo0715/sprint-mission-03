@@ -28,6 +28,7 @@ public class BasicBinaryContentService implements BinaryContentService {
     public BinaryContentResponse create(BinaryContentCreateRequest request) {
         BinaryContent binaryContent = new BinaryContent(
                 request.fileName(),
+                request.size(),
                 request.contentType(),
                 request.bytes());
         this.binaryContentRepository.save(binaryContent);

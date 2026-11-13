@@ -32,7 +32,8 @@ public class ChannelController {
     public ResponseEntity<ChannelResponse> createPublicChannel(
             @RequestBody PublicChannelCreateRequest request
     ) {
-        ChannelResponse publicChannelResponse = this.channelService.createPublicChannel(request);
+        ChannelResponse publicChannelResponse =
+                this.channelService.createPublicChannel(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(publicChannelResponse);
     }
@@ -41,7 +42,8 @@ public class ChannelController {
     public ResponseEntity<ChannelResponse> createPrivateChannel(
             @RequestBody PrivateChannelCreateRequest request
     ) {
-        ChannelResponse privateChannelResponse = this.channelService.createPrivateChannel(request);
+        ChannelResponse privateChannelResponse =
+                this.channelService.createPrivateChannel(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(privateChannelResponse);
     }

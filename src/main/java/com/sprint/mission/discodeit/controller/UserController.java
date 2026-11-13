@@ -70,7 +70,7 @@ public class UserController {
         return ResponseEntity.ok(userListResponse);
     }
 
-    @PatchMapping("/{userId}/userstatus")
+    @PatchMapping("/{userId}/userStatus")
     public ResponseEntity<UserStatusResponse> updateUserOnlineStatus(
             @PathVariable("userId") UUID userId,
             @Valid @RequestBody UserStatusUpdateRequest request

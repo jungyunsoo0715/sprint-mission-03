@@ -64,6 +64,7 @@ public class BasicUserService implements UserService {
     private BinaryContent createProfileImage(MultipartFile profile) throws IOException {
             BinaryContent profileImage = new BinaryContent(
                     profile.getOriginalFilename(),
+                    profile.getSize(),
                     profile.getContentType(),
                     profile.getBytes());
 
