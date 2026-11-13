@@ -56,9 +56,8 @@ public class BasicUserService implements UserService {
         UserStatus userStatus = new UserStatus(user.getId());
 
         this.userRepository.save(user);
-        this.userStatusRepository.save(userStatus);
 
-        return this.userMapper.toUserResponse(user, userStatus);
+        return this.userMapper.toUserResponse(user);
     }
 
     private BinaryContent createProfileImage(MultipartFile profile) throws IOException {
@@ -100,7 +99,7 @@ public class BasicUserService implements UserService {
         User user = findUserEntity(userId);
         UserStatus userStatus = this.findUserStatus(user.getId());
 
-        return this.userMapper.toUserResponse(user, userStatus);
+        return this.userMapper.toUserResponse(user);
     }
 
     @Override
@@ -122,7 +121,7 @@ public class BasicUserService implements UserService {
                             "ID가 " + user.getId() + "인 user의 userStatus를 찾을 수 없습니다."
                     ));
 
-            userResponses.add(this.userMapper.toUserResponse(user, userStatus));
+            userResponses.add(this.userMapper.toUserResponse(user));
         }
 
         return new UserListResponse(userResponses);
@@ -166,7 +165,7 @@ public class BasicUserService implements UserService {
             binaryContentRepository.deleteById(oldProfileId);
         }
 
-        return this.userMapper.toUserResponse(updatedUser, userStatus);
+        return this.userMapper.toUserResponse(updatedUser);
     }
 
     @Override
