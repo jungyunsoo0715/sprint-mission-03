@@ -59,7 +59,7 @@ public class ChannelController {
     }
 
     @DeleteMapping("/{channelId}")
-    public ResponseEntity<ChannelResponse> deleteChannel(
+    public ResponseEntity<Void> deleteChannel(
             @PathVariable("channelId") UUID channelId
     ) {
         this.channelService.delete(channelId);

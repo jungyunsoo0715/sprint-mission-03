@@ -36,7 +36,7 @@ public class ReadStatusController {
             @Valid @RequestBody ReadStatusUpdateRequest request
     ) {
         ReadStatusResponse readStatusResponse =
-                this.readStatusService.update(request);
+                this.readStatusService.update(readStatusId, request);
 
         return ResponseEntity.ok(readStatusResponse);
     }
