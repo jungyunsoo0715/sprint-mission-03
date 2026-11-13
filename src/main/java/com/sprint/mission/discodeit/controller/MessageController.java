@@ -54,7 +54,7 @@ public class MessageController {
 
     @GetMapping("/channel/{channel-id}")
     public ResponseEntity<MessageListResponse> findAllMessage(
-            @PathVariable("channel-id") UUID channelId
+            @RequestParam("channelId") UUID channelId
     ) {
         MessageListResponse messageResponseList =
                 this.messageService.findAllByChannelId(channelId);

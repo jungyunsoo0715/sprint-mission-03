@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/readstatus")
+@RequestMapping("/api/readstatuses")
 @RequiredArgsConstructor
 public class ReadStatusController {
     private final ReadStatusService readStatusService;
@@ -30,7 +30,7 @@ public class ReadStatusController {
         return ResponseEntity.status(HttpStatus.CREATED).body(readStatusResponse);
     }
 
-    @PatchMapping
+    @PatchMapping("/{read-status-id}")
     public ResponseEntity<ReadStatusResponse> updateReadStatus(
             @Valid @RequestBody ReadStatusUpdateRequest request
     ) {
