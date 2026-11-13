@@ -52,7 +52,7 @@ public class MessageController {
         return ResponseEntity.ok(messageResponse);
     }
 
-    @GetMapping("/{channel-id}/channel")
+    @GetMapping("/channel/{channel-id}")
     public ResponseEntity<MessageListResponse> findAllMessage(
             @PathVariable("channel-id") UUID channelId
     ) {

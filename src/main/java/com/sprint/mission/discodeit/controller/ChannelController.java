@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/channels")
+@RequestMapping("/api/channels")
 @RequiredArgsConstructor
 public class ChannelController {
 
     private final ChannelService channelService;
 
-    @PostMapping
+    @PostMapping({"/public", "/private"})
     public ResponseEntity<ChannelResponse> createChannel(
             @RequestBody ChannelCreateRequest request
     ) {
@@ -45,13 +45,12 @@ public class ChannelController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{user-id}")
+    @GetMapping
     public ResponseEntity<ChannelListResponse> getVisibleChannels(
-            @PathVariable("user-id") UUID userId
+            @RequestParam("userId") UUID userId
     ) {
         ChannelListResponse channelListResponse =
                 this.channelService.findAllByUserId(userId);
-
 
         return ResponseEntity.ok(channelListResponse);
     }

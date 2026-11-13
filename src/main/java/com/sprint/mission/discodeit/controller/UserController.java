@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -71,7 +70,7 @@ public class UserController {
         return ResponseEntity.ok(userListResponse);
     }
 
-    @PatchMapping("/{user-id}/status")
+    @PatchMapping("/{user-id}/userstatus")
     public ResponseEntity<UserStatusResponse> updateUserOnlineStatus(
             @PathVariable("user-id") UUID userId,
             @Valid @RequestBody UserStatusUpdateRequest request
