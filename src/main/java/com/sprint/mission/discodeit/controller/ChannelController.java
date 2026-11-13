@@ -17,6 +17,7 @@ public class ChannelController {
 
     private final ChannelService channelService;
 
+    /*
     @PostMapping({"/public", "/private"})
     public ResponseEntity<ChannelResponse> createChannel(
             @RequestBody ChannelCreateRequest request
@@ -24,6 +25,25 @@ public class ChannelController {
         ChannelResponse channelResponse = this.channelService.createChannel(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(channelResponse);
+    }
+     */
+
+    @PostMapping("/public")
+    public ResponseEntity<ChannelResponse> createPublicChannel(
+            @RequestBody PublicChannelCreateRequest request
+    ) {
+        ChannelResponse publicChannelResponse = this.channelService.createPublicChannel(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(publicChannelResponse);
+    }
+
+    @PostMapping("/private")
+    public ResponseEntity<ChannelResponse> createPrivateChannel(
+            @RequestBody PrivateChannelCreateRequest request
+    ) {
+        ChannelResponse privateChannelResponse = this.channelService.createPrivateChannel(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(privateChannelResponse);
     }
 
     @PatchMapping("/{channelId}")

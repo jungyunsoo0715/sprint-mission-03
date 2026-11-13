@@ -1,13 +1,15 @@
 package com.sprint.mission.discodeit.dto.channel;
 
-import com.sprint.mission.discodeit.entity.Channel;
+import com.sprint.mission.discodeit.entity.ChannelType;
 
 import java.time.Instant;
+import java.util.UUID;
 
 public record PublicChannelResponse(
-        @Override
-        Channel channel,
-        @Override
+        UUID id,
+        ChannelType channelType,
+        String name,
+        String description,
         Instant lastMessageAt
-) implements ChannelResponse {
+) {
 }
