@@ -39,11 +39,11 @@ public class UserController {
                 .body(userResponse);
     }
 
-    @PatchMapping(value = "/{user-id}",
+    @PatchMapping(value = "/{userId}",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<UserResponse> updateUser(
-            @PathVariable("user-id") UUID userId,
+            @PathVariable("userId") UUID userId,
             @Valid @RequestPart("request") UserUpdateRequest request,
             @RequestPart(value = "profile", required = false)
             MultipartFile profile) throws IOException {
@@ -70,9 +70,9 @@ public class UserController {
         return ResponseEntity.ok(userListResponse);
     }
 
-    @PatchMapping("/{user-id}/userstatus")
+    @PatchMapping("/{userId}/userstatus")
     public ResponseEntity<UserStatusResponse> updateUserOnlineStatus(
-            @PathVariable("user-id") UUID userId,
+            @PathVariable("userId") UUID userId,
             @Valid @RequestBody UserStatusUpdateRequest request
     ) {
         UserStatusResponse userStatusResponse =

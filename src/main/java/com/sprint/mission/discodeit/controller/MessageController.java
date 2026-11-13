@@ -30,9 +30,9 @@ public class MessageController {
         return ResponseEntity.status(HttpStatus.CREATED).body(messageResponse);
     }
 
-    @PatchMapping("/{message-id}")
+    @PatchMapping("/{messageId}")
     public ResponseEntity<MessageResponse> updateMessage(
-            @PathVariable("message-id") UUID messageId,
+            @PathVariable("messageId") UUID messageId,
             @RequestPart("request")MessageUpdateRequest request,
             @RequestPart(value = "attachments", required = false)
             List<MultipartFile> attachments
@@ -43,16 +43,16 @@ public class MessageController {
         return ResponseEntity.ok(messageResponse);
     }
 
-    @GetMapping("/{message-id}")
+    @GetMapping("/{messageId}")
     public ResponseEntity<MessageResponse> findMessage(
-            @PathVariable("message-id") UUID messageId
+            @PathVariable("messageId") UUID messageId
     ) {
         MessageResponse messageResponse = this.messageService.find(messageId);
 
         return ResponseEntity.ok(messageResponse);
     }
 
-    @GetMapping("/channel/{channel-id}")
+    @GetMapping
     public ResponseEntity<MessageListResponse> findAllMessage(
             @RequestParam("channelId") UUID channelId
     ) {
@@ -62,9 +62,9 @@ public class MessageController {
         return ResponseEntity.ok(messageResponseList);
     }
 
-    @DeleteMapping("/{message-id}")
+    @DeleteMapping("/{messageId}")
     public ResponseEntity<Void> deleteMessage(
-            @PathVariable("message-id") UUID messageId
+            @PathVariable("messageId") UUID messageId
     ) {
         this.messageService.delete(messageId);
 

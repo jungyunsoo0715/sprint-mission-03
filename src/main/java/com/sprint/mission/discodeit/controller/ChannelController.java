@@ -26,9 +26,9 @@ public class ChannelController {
         return ResponseEntity.status(HttpStatus.CREATED).body(channelResponse);
     }
 
-    @PatchMapping("/{channel-id}")
+    @PatchMapping("/{channelId}")
     public ResponseEntity<ChannelResponse> updatePublicChannel(
-            @PathVariable("channel-id") UUID channelId,
+            @PathVariable("channelId") UUID channelId,
             @RequestBody ChannelUpdateRequest request
     ) {
         ChannelResponse channelResponse = this.channelService.update(channelId, request);
@@ -36,9 +36,9 @@ public class ChannelController {
         return ResponseEntity.ok(channelResponse);
     }
 
-    @DeleteMapping("/{channel-id}")
+    @DeleteMapping("/{channelId}")
     public ResponseEntity<ChannelResponse> deleteChannel(
-            @PathVariable("channel-id") UUID channelId
+            @PathVariable("channelId") UUID channelId
     ) {
         this.channelService.delete(channelId);
 
