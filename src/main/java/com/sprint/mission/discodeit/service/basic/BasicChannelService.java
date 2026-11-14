@@ -1,10 +1,8 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.channel.*;
-import com.sprint.mission.discodeit.dto.channel.ChannelCreateRequest;
 import com.sprint.mission.discodeit.entity.*;
 import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
-import com.sprint.mission.discodeit.exception.channel.InvalidChannelCreateRequestException;
 import com.sprint.mission.discodeit.exception.channel.InvalidChannelUpdateRequestException;
 import com.sprint.mission.discodeit.exception.channel.PrivateChannelModificationNotAllowedException;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundException;
@@ -78,7 +76,7 @@ public class BasicChannelService implements ChannelService {
         Channel publicChannel = new Channel(request);
         this.channelRepository.save(publicChannel);
 
-        return this.channelMapper.toChannelResponse(publicChannel);
+        return this.channelMapper.toChannelResponse(publicChannel, null, null);
     }
 
     @Override
@@ -101,7 +99,8 @@ public class BasicChannelService implements ChannelService {
         this.channelRepository.save(privateChannel);
         this.readStatusRepository.saveAll(readStatusList);
 
-        return this.channelMapper.toChannelResponse(privateChannel);
+        Set<UUID> participantIds = new HashSet<>(request.participantIds());
+        return this.channelMapper.toChannelResponse(privateChannel, participantIds, null);
     }
 
     /*
@@ -232,7 +231,7 @@ public class BasicChannelService implements ChannelService {
 
         this.channelRepository.save(channel);
 
-        return this.channelMapper.toChannelResponse(channel);
+        return this.channelMapper.toChannelResponse(channel, null, this.findLastMessageAt(channel.getId()));
     }
 
     @Override
