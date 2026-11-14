@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -64,10 +65,11 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<UserListResponse> getAllUsers() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         UserListResponse userListResponse = this.userService.findAll();
 
-        return ResponseEntity.ok(userListResponse);
+
+        return ResponseEntity.ok(userListResponse.users());
     }
 
     @PatchMapping("/{userId}/userStatus")

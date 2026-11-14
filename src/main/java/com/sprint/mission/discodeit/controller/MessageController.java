@@ -66,13 +66,13 @@ public class MessageController {
     }
 
     @GetMapping
-    public ResponseEntity<MessageListResponse> findAllMessage(
+    public ResponseEntity<List<MessageResponse>> findAllMessage(
             @RequestParam("channelId") UUID channelId
     ) {
         MessageListResponse messageResponseList =
                 this.messageService.findAllByChannelId(channelId);
 
-        return ResponseEntity.ok(messageResponseList);
+        return ResponseEntity.ok(messageResponseList.messages());
     }
 
     @DeleteMapping("/{messageId}")

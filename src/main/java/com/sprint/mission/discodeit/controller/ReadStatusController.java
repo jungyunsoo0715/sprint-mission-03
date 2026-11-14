@@ -42,13 +42,13 @@ public class ReadStatusController {
     }
 
     @GetMapping
-    public ResponseEntity<ReadStatusListResponse> findReadStatusesByUserId(
+    public ResponseEntity<List<ReadStatusResponse>> findReadStatusesByUserId(
             @RequestParam("userId") UUID userId
     ) {
         ReadStatusListResponse readStatusListResponse =
                 this.readStatusService.findAllByUserId(userId);
 
-        return ResponseEntity.ok(readStatusListResponse);
+        return ResponseEntity.ok(readStatusListResponse.readStatuses());
     }
 }
 
