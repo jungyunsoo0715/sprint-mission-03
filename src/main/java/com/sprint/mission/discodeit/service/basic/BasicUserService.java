@@ -56,6 +56,7 @@ public class BasicUserService implements UserService {
         UserStatus userStatus = new UserStatus(user.getId());
 
         this.userRepository.save(user);
+        this.userStatusRepository.save(userStatus);
 
         return this.userMapper.toUserResponse(user);
     }
