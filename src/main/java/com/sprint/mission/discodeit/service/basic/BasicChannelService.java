@@ -176,7 +176,7 @@ public class BasicChannelService implements ChannelService {
                 .map(ReadStatus::getChannelId)
                 .collect(Collectors.toSet());
 
-        List<PrivateChannelResponseByUserId> privateChannelResponsesByUserId =
+        List<ChannelResponse> privateChannelResponses =
                 this.channelRepository.findAll().stream()
                         .filter(c -> c.getType() == ChannelType.PRIVATE
                         && channelIdsByUserId.contains(c.getId()))
@@ -185,7 +185,7 @@ public class BasicChannelService implements ChannelService {
                             Set<UUID> participantIds = this.findParticipantIds(c.getId());
                             Instant lastMessageAt = this.findLastMessageAt(c.getId());
 
-                            return this.channelMapper.toPrivateChannelResponseByUserId(
+                            return this.channelMapper.toChannelResponse(
                                     channel,
                                     participantIds,
                                     lastMessageAt);
@@ -193,19 +193,23 @@ public class BasicChannelService implements ChannelService {
                         .distinct()
                         .collect(Collectors.toCollection(ArrayList::new));
 
-        List<PublicChannelResponse> publicChannelResponses = this.channelRepository.findAll().stream()
+        List<ChannelResponse> publicChannelResponses = this.channelRepository.findAll().stream()
                 .filter(c -> c.getType() == ChannelType.PUBLIC)
                 .distinct()
                 .map((c) -> {
                     Channel channel = c;
                     Instant lastMessageAt = this.findLastMessageAt(c.getId());
 
-                    return this.channelMapper.toPublicChannelResponse(channel, lastMessageAt);
+                    return this.channelMapper.toChannelResponse(channel,
+                            null,
+                            lastMessageAt);
                 })
                 .distinct()
                 .toList();
 
-        return new ChannelListResponse(privateChannelResponsesByUserId, publicChannelResponses);
+        privateChannelResponses.addAll(publicChannelResponses);
+
+        return new ChannelListResponse(privateChannelResponses);
     }
 
     @Override

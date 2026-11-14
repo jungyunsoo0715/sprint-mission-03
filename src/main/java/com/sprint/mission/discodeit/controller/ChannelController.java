@@ -68,12 +68,12 @@ public class ChannelController {
     }
 
     @GetMapping
-    public ResponseEntity<ChannelListResponse> getVisibleChannels(
+    public ResponseEntity<List<ChannelResponse>> getVisibleChannels(
             @RequestParam("userId") UUID userId
     ) {
         ChannelListResponse channelListResponse =
                 this.channelService.findAllByUserId(userId);
 
-        return ResponseEntity.ok(channelListResponse);
+        return ResponseEntity.ok(channelListResponse.channels());
     }
 }

@@ -13,17 +13,20 @@ import java.util.UUID;
 
 @Component
 public class ChannelMapper {
-    public ChannelResponse toChannelResponse(Channel channel) {
+    public ChannelResponse toChannelResponse(Channel channel,
+                                             Set<UUID> participantIds,
+                                             Instant lastMessageAt) {
         return new ChannelResponse(
                 channel.getId(),
-                channel.getCreatedAt(),
-                channel.getUpdatedAt(),
                 channel.getType(),
                 channel.getName(),
-                channel.getDescription()
+                channel.getDescription(),
+                participantIds,
+                lastMessageAt
         );
     }
 
+    /*
     public PrivateChannelResponseByUserId toPrivateChannelResponseByUserId(
             Channel channel,
             Set<UUID> participantIds,
@@ -51,5 +54,5 @@ public class ChannelMapper {
                 lastMessageAt
         );
     }
-
+     */
 }
