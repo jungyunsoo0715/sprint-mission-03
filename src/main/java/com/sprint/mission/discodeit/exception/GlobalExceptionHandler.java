@@ -26,7 +26,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DuplicateResourceException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    // @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleDuplicateResourceException(DuplicateResourceException exception) {
         return exception.getMessage();
     }

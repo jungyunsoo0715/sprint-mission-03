@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -137,11 +138,20 @@ public class BasicUserService implements UserService {
 
         User user = this.findUserEntity(userId);
 
-        if (!Objects.equals(request.newUsername(), user.getUsername())) {
-            validateUniqueUsername(request.newUsername());
+        String newUsername = null;
+        String newEmail = null;
+        String newPassword = null;
+
+        if (request.newUsername() != null) {
+            this.validateUniqueUsername(request.newUsername());
+            newUsername = request.newUsername();
         }
-        if (!Objects.equals(request.newEmail(), user.getEmail())) {
-            validateUniqueEmail(request.newEmail());
+        if (request.newEmail() != null) {
+            this.validateUniqueEmail(request.newEmail());
+            newEmail = request.newEmail();
+        }
+        if (request.newPassword() != null) {
+            newPassword = request.newPassword();
         }
 
         UUID oldProfileId = user.getProfileId();
@@ -153,14 +163,14 @@ public class BasicUserService implements UserService {
         }
 
         user.update(
-                request.newUsername(),
-                request.newEmail(),
-                request.newPassword(),
+                newUsername,
+                newEmail,
+                newPassword,
                 newProfileId
         );
 
         User updatedUser = userRepository.save(user);
-        UserStatus userStatus = this.findUserStatus(userId);
+        this.findUserStatus(userId).makeOnline();
 
         if (newProfileId != null && oldProfileId != null) {
             binaryContentRepository.deleteById(oldProfileId);
