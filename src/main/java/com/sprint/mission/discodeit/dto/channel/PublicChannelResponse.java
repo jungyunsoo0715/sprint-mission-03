@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public record PublicChannelResponse(
         UUID id,
-        ChannelType channelType,
+        ChannelType type,
         String name,
         String description,
         Instant lastMessageAt

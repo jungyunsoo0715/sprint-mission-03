@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UserResponse> createUser(
-            @Valid @RequestPart("request") UserCreateRequest request,
+            @Valid @RequestPart("userCreateRequest") UserCreateRequest request,
             @RequestPart(value = "profile", required = false)
             MultipartFile profile
     ) throws IOException {
@@ -44,7 +44,7 @@ public class UserController {
     )
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable("userId") UUID userId,
-            @Valid @RequestPart("request") UserUpdateRequest request,
+            @Valid @RequestPart("userUpdateRequest") UserUpdateRequest request,
             @RequestPart(value = "profile", required = false)
             MultipartFile profile) throws IOException {
         UserResponse userResponse = this.userService.update(

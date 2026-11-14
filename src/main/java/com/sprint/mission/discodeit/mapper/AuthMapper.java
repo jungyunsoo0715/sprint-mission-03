@@ -13,7 +13,6 @@ public class AuthMapper {
                 user.getUpdatedAt(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getPassword(),
                 user.getProfileId()
         );
     }

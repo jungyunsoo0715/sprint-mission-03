@@ -20,7 +20,7 @@ public class MessageController {
 
     @PostMapping
     public ResponseEntity<MessageResponse> createMessage(
-            @Valid @RequestPart("request") MessageCreateRequest request,
+            @Valid @RequestPart("messageCreateRequest") MessageCreateRequest request,
             @RequestPart(value = "attachments", required = false)
             List<MultipartFile> attachments
     ) {

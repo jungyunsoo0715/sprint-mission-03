@@ -55,11 +55,12 @@ public class BasicUserService implements UserService {
                 request.password(),
                 newProfileId);
         UserStatus userStatus = new UserStatus(user.getId());
+        userStatus.makeOnline();
 
         this.userRepository.save(user);
         this.userStatusRepository.save(userStatus);
 
-        return this.userMapper.toUserResponse(user);
+        return this.userMapper.toUserResponse(user, userStatus);
     }
 
     private BinaryContent createProfileImage(MultipartFile profile) throws IOException {
@@ -101,7 +102,9 @@ public class BasicUserService implements UserService {
         User user = findUserEntity(userId);
         UserStatus userStatus = this.findUserStatus(user.getId());
 
-        return this.userMapper.toUserResponse(user);
+        userStatus.makeOnline();
+
+        return this.userMapper.toUserResponse(user, userStatus);
     }
 
     @Override
@@ -123,7 +126,9 @@ public class BasicUserService implements UserService {
                             "ID가 " + user.getId() + "인 user의 userStatus를 찾을 수 없습니다."
                     ));
 
-            userResponses.add(this.userMapper.toUserResponse(user));
+            userStatus.makeOnline();
+
+            userResponses.add(this.userMapper.toUserResponse(user, userStatus));
         }
 
         return new UserListResponse(userResponses);
@@ -170,13 +175,15 @@ public class BasicUserService implements UserService {
         );
 
         User updatedUser = userRepository.save(user);
-        this.findUserStatus(userId).makeOnline();
+        UserStatus userStatus = this.findUserStatus(userId);
+
+        userStatus.makeOnline();
 
         if (newProfileId != null && oldProfileId != null) {
             binaryContentRepository.deleteById(oldProfileId);
         }
 
-        return this.userMapper.toUserResponse(updatedUser);
+        return this.userMapper.toUserResponse(updatedUser, userStatus);
     }
 
     @Override

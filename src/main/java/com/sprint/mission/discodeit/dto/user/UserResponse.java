@@ -8,8 +8,8 @@ public record UserResponse(
         Instant createdAt,
         Instant updatedAt,
         String username,
+        boolean online,
         String email,
-        String password,
         UUID profileId
 ) {
 }
